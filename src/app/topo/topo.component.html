@@ -1,0 +1,50 @@
+
+<body>
+  
+  <div class="teste">
+    
+  
+    <nav class="navbar fixed-top navbar-light bg-white">
+      <div>
+        <div class="menu">
+          <div class="container">
+            <ul class="nav">
+              <li class="nav-item">
+                <a class="nav-link"routerLinkActive="active" routerLink="/smartphones">Smartphones</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link"routerLinkActive="active" routerLink="/eletronicos">Eletrônicos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link"routerLinkActive="active" routerLink="/home">home</a>
+              </li>             
+              <li>
+                <a class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal" >Cadastrar Novo Produto</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link"routerLinkActive="active" routerLink="/meusprodutos">Meus produtos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link"routerLinkActive="active" routerLink="/favoritos">Favoritos</a>
+              </li>
+              <li>
+                <a class="nav-link" ><app-pesquisa></app-pesquisa></a>
+              </li>
+              
+              
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+  <br /><br /><br />
+  
+  <div class="container">
+    <app-incluir-publicacao></app-incluir-publicacao>
+    <router-outlet></router-outlet>  
+  </div>
+  
+
+</body>

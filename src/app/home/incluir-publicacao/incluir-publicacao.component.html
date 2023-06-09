@@ -1,0 +1,74 @@
+<!-- Button trigger modal 
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+  </button>
+  -->
+  
+  <!-- Modal utilizar este-->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+
+        <form [formGroup]="formulario" (ngSubmit)="publicar()">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastrar novo produto</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input
+          type="file"
+          class="form-control"
+          accept="image/*"
+          (change)="preparaImagemUpload($event)"
+          >
+          <input
+          type="file"
+          class="form-control"
+          accept="image/*"
+          (change)="preparaImagemUpload2($event)"
+          >
+          <input
+          type="file"
+          class="form-control"
+          accept="image/*"
+          (change)="preparaImagemUpload3($event)"
+          >
+          <input
+          type="file"
+          class="form-control"
+          accept="image/*"
+          (change)="preparaImagemUpload4($event)"
+          >
+          
+          
+          <input
+          type="text"
+          placeholder="Descrição do produto"
+          class="form-control"
+          formControlName="titulo"
+          >
+          <input
+          type="text"
+          placeholder="Categoria"
+          class="form-control"
+          formControlName="categoria"
+          >
+          <input
+          type="text"
+          placeholder="Valor"
+          class="form-control"
+          formControlName="valor"
+          >
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+  
+
+  

@@ -1,0 +1,43 @@
+
+<div class="teste">
+  
+    <form [formGroup]="formulario" (ngSubmit)="pesquisar()" class="d-flex align-items-stretch">
+        <input type="text" class="form-control flex-grow-0" placeholder="Pesquisar" (input)="atualizaresposta($event)" [value]="resposta" formControlName="pesquisar" style="height: 28px;">
+        <button type="submit" class="btn btn-primary flex-grow-0"
+         style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; height: 28px;" >Buscar</button>
+      </form>
+    <div *ngIf="teste">
+    <div class="row" *ngFor="let publicacao of produtos">
+        <div class="col d-flex justify-content-center">
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text"><strong>{{publicacao.nome_usuario}}</strong></p>
+            </div>
+      
+           <!-- <img class="card-img" [src]="publicacao.url_imagem" />
+             <img class="card-img" [src]="publicacao.url_imagem2" />
+            
+            */--> 
+            <div *ngIf="publicacao.url && publicacao.url.length">
+              <div *ngFor="let urlItem of publicacao.url">
+                <img class="card-img" [src]="urlItem" />
+              </div>
+            </div>     
+      
+            <div class="card-body">
+              <p class="card-text">
+                <strong></strong> {{publicacao.titulo}}
+              </p>
+              <p class="card-text">
+                <strong></strong> R$ {{publicacao.valor}}
+              </p>
+              <p class="card-text">
+                <strong></strong> {{publicacao.categoria}}
+              </p>
+      
+              <hr />
+             
+            </div>
+          </div>
+        </div>
+    </div>

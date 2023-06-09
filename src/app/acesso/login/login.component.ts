@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Autenticacao } from 'src/app/autenticacao.service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   })
 
-  constructor(private autenticacao: Autenticacao) {
+  constructor(private autenticacao: Autenticacao, private rota:Router) {
   }
 
  @Output() public exibirPainel:EventEmitter <string>= new EventEmitter <string> ();
@@ -30,8 +31,13 @@ export class LoginComponent implements OnInit {
 
   public autenticar(): void {
    this.autenticacao.autenticar(this.formulario.value.email, btoa(this.formulario.value.senha))
+   .then(()=>{
+    
+    
+   })
+   .catch(err =>console.log(err))
   }
-
+/*
   public deletar(): void {
     this.autenticacao.DeletarUsuarioBD(this.formulario.value.email)
       .then(()=>{
@@ -41,6 +47,8 @@ export class LoginComponent implements OnInit {
     //this.autenticacao.desativarConta()
   
   }
+*/
+
 
   
 }

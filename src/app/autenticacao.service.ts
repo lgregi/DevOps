@@ -1,3 +1,4 @@
+//serivço criado para cadastro e login de usuários
 import { Usuario } from "./acesso/usuario.model";
 import * as firebase from "firebase";
 import { Injectable } from "@angular/core";
@@ -36,9 +37,9 @@ export class Autenticacao {
 
 
     // autenticação utilizando a função nativa do firebase "signInWithEmailAndPassword"
-    public autenticar(email: string, senha: string) {
+    public autenticar(email: string, senha: string) :Promise<any> {
         console.log('autenticação realizada com sucesso através do sistema de autenticação do FireBase:')
-        firebase.auth().signInWithEmailAndPassword(email, senha)
+       return firebase.auth().signInWithEmailAndPassword(email, senha)
             .then((resposta: any) => {
 
                 alert('Autenticação realizada com sucesso')
@@ -46,7 +47,9 @@ export class Autenticacao {
                     .then((id: string) => {
                         this.token_id = id
                         console.log(this.token_id)
+                        //serve para não deslogar se a página for recarregada, armazenando o token no localstorage
                         localStorage.setItem('id_token',id)
+                        
 
                         // redireciona para a rota após login
                        // this.rotas.navigate(['/'])
@@ -63,6 +66,7 @@ export class Autenticacao {
             })
 
     }
+    
 
     // deleta usuário do banco de dados
     public async DeletarUsuarioBD(email: string): Promise<any> {
@@ -91,30 +95,30 @@ export class Autenticacao {
             .catch((err: Error) => console.log(err));
     }
 
+    
 
     public autenticado() :boolean{
 
-        let ok :boolean = true
-
-        if(this.token_id === undefined&& localStorage.getItem('id_token')!=null){
+        let ok :boolean = false
+        // enquanto o token o id_token estiver aramazenado no localstorage,  o sistema sabe que o usuário está logado
+        if(localStorage.getItem('id_token')!=null){
             this.token_id = localStorage.getItem('id_token')
+            ok =true
             
         }
-        // se não tiver autenticado, direciona para a rota raiza
+        // se não tiver autenticado, direciona para a rota raiz
         if(this.token_id ===undefined){
-            this.rotas.navigate(['/']);
-        }// se não tiver autenticado, direciona para a rota raiza
-        if(this.token_id ===undefined){
+            ok = false
             this.rotas.navigate(['/']);
         }
-        return this.token_id !==undefined
+        return ok
 
 
         
 
     }
 
-
+// função para deslogar, deletando o id aramazenado no localstorage e deslogando do firebase
     public sair (){
 
         firebase.auth().signOut()
@@ -126,4 +130,68 @@ export class Autenticacao {
       .catch((err) => {console.log(err)})
         
     }
+
+    public AlterarUsuario(email: string, novosDados: any): void {
+        firebase.database().ref(`usuario_detalhe/${btoa(email)}`)
+        .update({ nome_usuario: novosDados })
+            .then(() => {
+                alert('Dados do usuário alterados com sucesso');
+            })
+            .catch((error) => {
+                console.log('Erro ao alterar os dados do usuário:', error);
+            });
+        this.rotas.navigate(['/login']);
+    }
+
+    public acessarDadosUsuario(email: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+          firebase.database().ref(`usuario_detalhe/${btoa(email)}`)
+            .once('value')
+            .then((snapshot: any) => {              
+                const dadosUsuario = snapshot.val();
+                const dados = dadosUsuario
+                console.log(dadosUsuario);
+                resolve(dados);
+              
+            })
+            .catch((error: any) => {
+              console.log('Erro ao acessar os dados do usuário:', error);
+              reject(error);
+            });
+        });
+      }
+      
+      public alterarSenha(novaSenha: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+          const user = firebase.auth().currentUser;
+      
+          if (user) {
+            user.updatePassword(btoa(novaSenha))
+              .then(() => {
+                console.log('Senha alterada com sucesso');
+                resolve();
+              })
+              .catch((error) => {
+                console.log('Erro ao alterar a senha:', error);
+                reject(error);
+              });
+          } else {
+            reject(new Error('Nenhum usuário autenticado'));
+          }
+        });
+      }
+
+      public async DeletarArquivoStorage(caminho: string): Promise<any> {
+        
+        const storageRef = firebase.storage().ref();
+        const arquivoRef = storageRef.child(caminho);
+    
+        try {
+            await arquivoRef.delete();
+            console.log('Arquivo deletado com sucesso');
+        } catch (error) {
+            console.error('Erro ao deletar arquivo:', error);
+        }
+    }
+    
 }

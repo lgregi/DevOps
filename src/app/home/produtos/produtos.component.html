@@ -1,1 +1,92 @@
-<h3>produtos works!</h3>
+<!--<div class="row">
+  <div class="col d-flex justify-content-center">
+    <div class="card" *ngIf="produto && produto.length > 0">
+      <div class="card-body">
+        <p class="card-text"><strong>{{produto[0].nome_usuario}}</strong></p>
+      </div>
+
+      <div *ngFor="let publicacao1 of produto2">
+        <img class="card-img" [src]="publicacao1.url[0]" />
+      </div>
+
+      <div class="card-body">
+        <p class="card-text">
+          <strong></strong> {{produto[0].titulo}}
+        </p>
+        <p class="card-text">
+          <strong></strong> R$ {{produto[0].valor}}
+        </p>
+        <p class="card-text">
+          <strong></strong> {{produto[0].categoria}}
+        </p>
+        <hr />
+      </div>
+    </div>
+  </div>
+</div>
+-->
+<app-topo></app-topo>
+
+<div></div>
+  <div class="row" *ngFor="let publicacao of produto">
+    <div class="col d-flex justify-content-center">
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text"><strong>{{publicacao.nome_usuario}}</strong></p>
+        </div>
+  
+       <!-- <img class="card-img" [src]="publicacao.url_imagem" />
+         <img class="card-img" [src]="publicacao.url_imagem2" />
+        
+        */--> 
+        <div *ngIf="publicacao.url && publicacao.url.length">
+          <div *ngFor="let urlItem of publicacao.url">
+            <img class="card-img" [src]="urlItem" />
+          </div>
+        </div>
+        
+        
+        
+       
+        
+        
+        
+        <div class="card-body">
+          <p class="card-text">
+            <strong></strong> {{publicacao.titulo}}
+          </p>
+          <p class="card-text">
+            <strong></strong> R$ {{publicacao.valor}}
+          </p>
+          <p class="card-text">
+            <strong></strong> {{publicacao.categoria}}           
+            
+          </p>
+  
+          <hr />
+          <button type="button" class="btn btn-primary flex-grow-0" (click)="recuperarproduto(publicacao)" 
+            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; height: 28px;">Favoritar</button>
+            <button type="button" class="btn btn-primary flex-grow-0" (click)="Desfavoritar(publicacao)" 
+            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; height: 28px;">Desfavoritar</button>
+            <p></p>
+            <button type="button" class="btn btn-primary flex-grow-0" (click)="recuperaroferta(publicacao.key)" 
+            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; height: 28px;">Ver Oferta</button>
+         
+        </div>
+        
+        
+      </div>
+      <button type="button" class="btn btn-primary flex-grow-0" (click)="atualizarProdutos()" 
+            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; height: 28px;">mudar de pagina</button>
+         
+            <div *ngIf="paginas >2">
+              <button type="button" class="btn btn-primary flex-grow-0" (click)="voltar()" 
+              style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; height: 28px;">voltar</button>
+
+            </div>
+        </div>
+        
+    </div>
+
+    
+  

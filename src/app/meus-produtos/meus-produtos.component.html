@@ -1,0 +1,41 @@
+<app-topo></app-topo>
+<div></div>
+
+  <div class="row" *ngFor="let publicacao of produto">
+    <div class="col d-flex justify-content-center">
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text"><strong>{{publicacao.nome_usuario}}</strong></p>
+        </div>
+  
+       <!-- <img class="card-img" [src]="publicacao.url_imagem" />
+         <img class="card-img" [src]="publicacao.url_imagem2" />
+        
+        */--> 
+        <div *ngIf="publicacao.url && publicacao.url.length">
+          <div *ngFor="let urlItem of publicacao.url">
+            <img class="card-img" [src]="urlItem" />
+          </div>
+        </div>  
+  
+        
+        <div class="card-body">
+          <p class="card-text">
+            <strong></strong> {{publicacao.titulo}}
+          </p>
+          <p class="card-text">
+            <strong></strong> R$ {{publicacao.valor}}
+          </p>
+          <p class="card-text">
+            <strong></strong> {{publicacao.categoria}}
+            <!--<button type="button" (click)="recuperarproduto(publicacao)"></button>-->
+          </p>
+  
+          <hr />
+          <button type="button" class="btn btn-primary flex-grow-0" (click)="recuperarproduto(publicacao)" 
+            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; height: 28px;">Favoritar</button>
+         
+        </div>
+      </div>
+    </div>
+  

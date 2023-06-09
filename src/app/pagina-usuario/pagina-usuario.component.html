@@ -1,0 +1,34 @@
+
+    
+    
+    <form  [formGroup]="formulario" (ngSubmit)="Salvar()">
+        <div class="form-group" >
+        <input
+          type="file"
+          class="form-control"
+          accept="image/*"
+          (change)="preparaImagemUpload($event)"
+        >
+
+        <input 
+              type="text" 
+              class="form-control" 
+              placeholder="E-mail"
+              formControlName="nome"
+            >
+
+            <input 
+              type="password" 
+              class="form-control" 
+              placeholder="E-mail"
+              formControlName="senha"
+            >
+            <button type="submit"> testar</button>
+        </div>
+    </form>
+    <button type="button" (click)="teste()"> consultar</button>
+    <div *ngFor="let quadras of quadras">
+        <h3>{{quadras.nome_usuario}}</h3>
+        <h3>{{quadras.senha}}</h3>
+        <img [src]="quadras.url" >
+    </div>

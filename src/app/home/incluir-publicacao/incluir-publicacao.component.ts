@@ -43,9 +43,10 @@ export class IncluirPublicacaoComponent implements OnInit {
   }
 
   // função que manda os dados para o serviço de publicação
-  public publicar() {
-
-    this.produto.publicar({
+  public async publicar() {
+     
+    
+   await this.produto.publicar({
       email: this.email,
         titulo: this.formulario.value.titulo,
         categoria: this.formulario.value.categoria,

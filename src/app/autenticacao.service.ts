@@ -41,24 +41,14 @@ export class Autenticacao {
         console.log('autenticação realizada com sucesso através do sistema de autenticação do FireBase:')
        return firebase.auth().signInWithEmailAndPassword(email, senha)
             .then((resposta: any) => {
-
                 alert('Autenticação realizada com sucesso')
                 firebase.auth().currentUser?.getIdToken()
                     .then((id: string) => {
                         this.token_id = id
-                        console.log(this.token_id)
-                        //serve para não deslogar se a página for recarregada, armazenando o token no localstorage
-                        localStorage.setItem('id_token',id)
-                        
-
-                        // redireciona para a rota após login
-                       // this.rotas.navigate(['/'])
+                        console.log(this.token_id)                        
+                        localStorage.setItem('id_token',id)                     
                         this.rotas.navigate(['/home'])
-
                     })
-
-
-
             })
             .catch((err: Error) => {
                 alert('algo deu errado')

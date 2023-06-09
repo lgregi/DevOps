@@ -6,36 +6,35 @@ export class Ofertas {
 
     public oferta: any
     public key: any
-   
+
     constructor(private router: Router) {
 
     }
 
 
     public recuperarOferta(key: string) {
-       this.key = key
+        this.key = key
     }
     public async RetornarKey() {
         console.log('teste', this.key)
         return await this.key
-       
-     }
 
-    public RetornaOferta(key:string): Promise<any> {
-
-       return firebase.database().ref(`produtos/${this.key}`).once('value')
-        .then((ofeta) => {
-            console.log(ofeta.val())
-            this.oferta = ofeta.val()
-            console.log(this.oferta)
-            this.router.navigate(['/oferta'])
-        })
-        .catch((err:any)=>{
-            console.log(err)
-        })
-        
     }
 
-
+    public RetornaOferta(key: any): Promise<any> {
+        let get: Array<any> = []
+        let set: any
+        return new Promise((resolve, reject) => {
+            firebase.database().ref(`produtos/${key.key}`).once('value')
+                .then((ofeta) => {                    
+                    set =ofeta.val()
+                    get.push(set)
+                    resolve(get)                    
+                })
+                .catch((err: any) => {
+                    console.log(err)
+                })
+        })
+    }
 }
 

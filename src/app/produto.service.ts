@@ -184,13 +184,8 @@ export class Produto {
 
 
   
-public Automatic : boolean=true
-  while(){
-   this.consultarProdutos(1)
-   .then(()=>{
-    
-   })
-  }
+
+  
   public consultarProdutos(pagina: number): Promise<any> {
     const produtosPorPagina = 2;
     const inicio = (pagina - 1) * produtosPorPagina;
@@ -363,6 +358,7 @@ public Automatic : boolean=true
   //acessa dados do usuario e retorna o nome para armazenamento
   public acessarDadosUsuarioDetalhe(email: string): string {
 
+    
     let nome: string = ""
     firebase.database().ref(`usuario_detalhe/${btoa(email)}`)
       .on('value', (snapshot: any) => {

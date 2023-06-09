@@ -19,6 +19,7 @@ export class ProdutosComponent implements OnInit {
   public nome: any
   public paginas:number=1
   public ok :boolean =false
+  public Mostrar :boolean =false
   constructor(private produtos: Produto,private aut: Autenticacao, private favoritos: Favoritos, private ofertas:Ofertas) {
 
   }
@@ -27,39 +28,33 @@ export class ProdutosComponent implements OnInit {
     firebase.auth().onAuthStateChanged((user: any) => {
       this.email = user.email
       this.atualizarProdutos()
-      this.ofertas.key = '1234567890'
+      this.produtos.acessarDadosUsuarioDetalhe(this.email)
       
       
     })
 
   }
   //traz todo os produtos
-  public atualizarProdutos(): void {
-   
+  public atualizarProdutos(): void { 
+    
       this.produtos.consultarProdutos(this.paginas)
       .then((produtos) => {
         this.produto = produtos       
         console.log(this.produto)        
-        this.paginas ++        
-       
-      })
-     
+        this.paginas ++      
+      })  
+
     
-   
+         
   }
 
-  public voltar(){
-    
+  public voltar(){    
     this.produtos.voltarPagina(this.email,this.paginas)
     .then((produtos) => {
       this.produto = produtos
       this.paginas--
-      console.log(this.produto)
-      
-    })
-      
-    
-    
+      console.log(this.produto)      
+    })  
   }
 
   recuperarproduto(produtos: any) {
@@ -77,15 +72,12 @@ export class ProdutosComponent implements OnInit {
     })
   }
 
-  public async recuperaroferta (produtos: any) {
-    this.ofertas.key= await produtos.key
-    let t =this.ofertas.RetornarKey()
-    console.log(t)
-   
-    
-    
-    //this.favoritos.DeletarUsuarioBD(this.email,produtos.key)
-    
+  public async recuperaroferta (produtos: any){
+   this.ofertas.RetornaOferta(produtos)
+   .then((dados:any)=>{
+    this.produto = dados
+    console.log(dados)
+   })
   }
   public async alterar(){
     let tets = ''

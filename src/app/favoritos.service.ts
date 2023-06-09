@@ -1,20 +1,21 @@
 import * as firebase from "firebase";
 
 export class Favoritos {
-public key:any
+    public key: any
     public Favoritar(email: string, dados: any): void {
         dados.email = email
         console.log(dados)
         firebase.database().ref(`favoritos/${btoa(email)}`)
             .push(dados)
-            .then((snapshot:any) => {
+            .then((snapshot: any) => {
                 this.key = snapshot.key;
                 firebase.database().ref(`favoritos/${btoa(email)}/${this.key}`)
-                .update({key: dados.key})
+                    .update({ key: dados.key })
                 console.log(this.key);
                 console.log('Favoritado', dados)
 
             })
+
     }
 
     public consultarFavoritados(email: string): Promise<any> {
@@ -41,8 +42,8 @@ public key:any
         })
     }
 
-    public async Desfavoritar(email: string, key:string) {
-        
+    public async Desfavoritar(email: string, key: string) {
+
         firebase.database().ref(`favoritos/${btoa(email)}/${key}`)
             .remove()
             .then(() => {

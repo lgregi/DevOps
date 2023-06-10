@@ -13,14 +13,12 @@ export class CelularComponent implements OnInit {
   public produto2: any
   public nome: any
   constructor(private produtos: Produto) {
-
   }
 
   ngOnInit(): void {
     firebase.auth().onAuthStateChanged((user: any) => {
       this.email = user.email
       this.atualizarProdutos()
-
     })
 
   }
@@ -29,29 +27,9 @@ export class CelularComponent implements OnInit {
     this.produtos.consultarProdutosPorCategoria(this.email, 'smartphones')
       .then((produtos) => {
         this.produto=produtos
-        console.log(this.produto)
-        
-
-      })
-      /*this.produtos.consultarProdutos2(this.email)
-      .then((produtos) => {
-        this.produto2=produtos
-        console.log(this.produto)
-
-      })
-      .then(()=>{
-        this.ok=true
-      })*/
-      this.produtos.acessarDadosUsuarioDetalhe(this.email)
-      
-      this.produtos.acessarDadosProduto(this.email)
-      .then((nome)=>{
-        this.nome = nome
-        console.log(this.nome)
+        console.log(this.produto)     
 
       })
       
-
-
   }
 }

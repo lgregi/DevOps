@@ -5,23 +5,13 @@ import * as firebase from "firebase"
 import { Observable } from 'rxjs';
 import { Router } from "@angular/router";
 
-//import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-
-
-
-
-
 @Injectable()
 export class Produto {
   public imagem: Array<any> = []
   public key: any
   public nome: any
   public contador: number = 0
-
-
-  constructor(private progresso: Progresso, private router: Router) {
-
-  }
+  constructor(private progresso: Progresso, private router: Router) {}
 
   //função para armazenar uma imagem no firebase e criar o nó contendo as informações do produto
   public publicar(publicacao: any): Promise<any> {
@@ -31,7 +21,7 @@ export class Produto {
         .push({
           titulo: publicacao.titulo, categoria: publicacao.categoria,
           valor: publicacao.valor, email: publicacao.email,
-          nome_usuario: publicacao.nome_usuario
+          nome_usuario: publicacao.nome_usuario, telefone: publicacao.telefone, descricao: publicacao.descricao
         })
         .then((resposta: any) => {
           // console.log(resposta)
@@ -42,7 +32,6 @@ export class Produto {
             .child(`${this.key}/${nomeImagem}`)
             .put(publicacao.imagem)
             .then((snapshot) => {
-
               console.log('concluida1')
               snapshot.ref.getDownloadURL().then((url) => {
                 // URL da imagem obtida
@@ -60,7 +49,6 @@ export class Produto {
           console.log(publicacao)
           console.log("chegamos até o controle de dados")
         })
-
     });
   }
 
@@ -69,9 +57,7 @@ export class Produto {
   public publicar2(publicacao: any): Promise<any> {
     return new Promise((resolve, reject) => {
       let nomeImagem = this.key + '1'
-
-      firebase
-        .storage().ref().child(`${this.key}/${nomeImagem}`)
+      firebase.storage().ref().child(`${this.key}/${nomeImagem}`)
         .put(publicacao.imagem2)
         .then((snapshot) => {
           // Upload concluído com sucesso
@@ -108,9 +94,7 @@ export class Produto {
   public publicar3(publicacao: any): Promise<any> {
     return new Promise((resolve, reject) => {
       let nomeImagem = this.key + '2'
-
-      firebase
-        .storage().ref().child(`${this.key}/${nomeImagem}`)
+      firebase.storage().ref().child(`${this.key}/${nomeImagem}`)
         .put(publicacao.imagem3)
         .then((snapshot) => {
           // Upload concluído com sucesso
@@ -133,12 +117,10 @@ export class Produto {
           });
         })
         .catch((error) => {
-          // Tratamento de erro
           console.error(error);
           reject(error);
         });
 
-      //console.log(publicacao)
       console.log("chegamos até o controle de dados3");
     });
   }
@@ -147,9 +129,7 @@ export class Produto {
   public publicar4(publicacao: any): Promise<any> {
     return new Promise((resolve, reject) => {
       let nomeImagem = this.key + '3'
-
-      firebase
-        .storage().ref().child(`${this.key}/${nomeImagem}`)
+      firebase.storage().ref().child(`${this.key}/${nomeImagem}`)
         .put(publicacao.imagem4)
         .then((snapshot) => {
           // Upload concluído com sucesso
@@ -183,9 +163,9 @@ export class Produto {
   }
 
 
-  
 
-  
+
+
   public consultarProdutos(pagina: number): Promise<any> {
     const produtosPorPagina = 2;
     const inicio = (pagina - 1) * produtosPorPagina;
@@ -215,7 +195,9 @@ export class Produto {
       throw error;
     }
   }
-  
+
+
+  //Serve para voltar de página
   public consultarProdutosPaginados(email: string, pagina: number): Promise<any> {
     const produtosPorPagina = 2;
     const inicio = (pagina - 1) * produtosPorPagina;
@@ -236,7 +218,7 @@ export class Produto {
           return produtosPaginados
         })
     }
-     catch (error) {
+    catch (error) {
       console.log(error);
       throw error;
     }
@@ -244,38 +226,14 @@ export class Produto {
 
   public voltarPagina(email: string, paginaAtual: number): Promise<any> {
     try {
-      this.contador++
       const paginaAnterior = paginaAtual - 2;
-      console.log('Página Retornada')
-      console.log(`Teste: ${this.contador}`)
-      console.log('Teste efetivo')
-      console.log(`Página: ${paginaAnterior}`);
       return this.consultarProdutosPaginados(email, paginaAnterior);
-    } 
+    }
     catch (error) {
       console.log(error);
       throw error;
     }
   }
-
-
-
-
-
-  public consultarall(): Promise<any> {
-
-    return firebase.database().ref('produtos')
-      .orderByKey()
-      .once('value')
-      .then((teste) => {
-        console.log(teste);
-      })
-  }
-
-
-
-
-
   // filtro por categoria
   public consultarProdutosPorCategoria(email: string, categoria: string): Promise<any> {
 
@@ -309,14 +267,12 @@ export class Produto {
         .orderByChild('titulo')
         .startAt(titulo)
         .endAt(titulo + '\uf8ff')
-
       const escutar = ref.on('value', (snapshot: any) => {
         const produtos: Array<any> = []
         snapshot.forEach((childSnapshot: any) => {
           const publicacao = childSnapshot.val()
           publicacao.key = childSnapshot.key
           produtos.push(publicacao)
-
         })
         this.router.navigate(['/pesquisa'])
         observer.next(produtos)
@@ -357,8 +313,6 @@ export class Produto {
 
   //acessa dados do usuario e retorna o nome para armazenamento
   public acessarDadosUsuarioDetalhe(email: string): string {
-
-    
     let nome: string = ""
     firebase.database().ref(`usuario_detalhe/${btoa(email)}`)
       .on('value', (snapshot: any) => {
@@ -371,40 +325,88 @@ export class Produto {
 
     return nome
   }
+  //acessa o telefone para salvar nos dados do produto
+  public acessarTelefone(email: string): string {
+    let nome: string = ""
+    firebase.database().ref(`usuario_detalhe/${btoa(email)}`)
+      .on('value', (snapshot: any) => {
+        snapshot.forEach((childSnapshot: any) => {
+          const dadosUsuario = childSnapshot.val();
+          nome = dadosUsuario.telefone
+          console.log(dadosUsuario.telefone);
+        });
+      });
+
+    return nome
+  }
   //acessa todos os dados do usuário do autenticado 
   public acessarDadosUsuario(email: string): Promise<string> {
     return new Promise((resolve, reject) => {
       firebase.database().ref(`usuario_detalhe/${btoa(email)}`)
         .on('value', (snapshot: any) => {
-          let nome: string = "";
+          let dados: string = "";
           snapshot.forEach((childSnapshot: any) => {
             const dadosUsuario = childSnapshot.val();
-            nome = dadosUsuario
+            dados = dadosUsuario
           });
-          resolve(nome);
+          resolve(dados);
         }, (error: any) => {
           reject(error);
         });
     });
   }
 
-
-  // acessa dados do produto
-  public async acessarDadosProduto(email: string): Promise<string> {
+  //Função que deleta Produtos
+  public async DeletarProduto(produto: any): Promise<any> {
+    let ok: boolean = true
     return new Promise((resolve, reject) => {
-      let nome: string = "";
-      firebase.database().ref(`produtos/${btoa(email)}`)
-        .on('value', (snapshot: any) => {
-          snapshot.forEach((childSnapshot: any) => {
-            const dadosUsuario = childSnapshot.val();
-            nome = dadosUsuario.nome_usuario
-            console.log(dadosUsuario);
-          });
-          resolve(nome);
-        }, (error: any) => {
-          reject(error);
-        });
-    });
+      firebase.database().ref(`produtos/${produto.key}`)
+        .once('value')
+        .then((dados: any) => {
+          console.log(dados.val())
+          let imagens = dados.val().url
+          console.log(dados.val())
+          for (let i = 0; i < imagens.length + 1; i++) {
+            if (i === 0) {
+              firebase.storage().ref().child(`${produto.key}/${produto.key}`)
+                .delete()
+                .then(() => {
+                  console.log("deletado do storage 1")
+                })
+            }
+            else if (i === 1) {
+              firebase.storage().ref().child(`${produto.key}/${produto.key}1`)
+                .delete()
+                .then(() => {
+                  console.log("deletado do storage 2")
+                })
+            }
+            else if (i === 2) {
+              firebase.storage().ref().child(`${produto.key}/${produto.key}2`)
+                .delete()
+                .then(() => {
+                  console.log("deletado do storage 3")
+                })
+            }
+            else if (i === 3) {
+              firebase.storage().ref().child(`${produto.key}/${produto.key}3`)
+                .delete()
+                .then(() => {
+                  console.log("deletado do storage 4")
+                })
+            }
+          }
+          firebase.database().ref(`produtos/${produto.key}`)
+            .remove()
+          console.log('Deletado com sucesso')
+          resolve(ok)
+        })
+        .catch(() => {
+          ok = false
+          reject(ok)
+        })
+
+    })
   }
 
 

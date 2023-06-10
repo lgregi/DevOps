@@ -30,8 +30,7 @@ export class MeusProdutosComponent implements OnInit {
     this.produtos.consultarProdutosPorusuario(this.email)
       .then((produtos) => {
         this.produto=produtos
-        console.log(this.produto)
-        
+        console.log(this.produto)       
 
       })
       
@@ -40,6 +39,13 @@ export class MeusProdutosComponent implements OnInit {
   recuperarproduto(produtos:any){
     this.favoritos.Favoritar(this.email,produtos)
     console.log(produtos)
+  }
+  Deletar(produto:any){
+    console.log(produto)
+    this.produtos.DeletarProduto(produto)
+    .then(()=>{
+      
+    })
   }
 }
 

@@ -23,9 +23,10 @@ export class IncluirPublicacaoComponent implements OnInit {
   public imagem4: any
 
   public formulario: FormGroup = new FormGroup({
-    'titulo': new FormControl(null),
-    'categoria': new FormControl(null),
-    'valor': new FormControl(null) 
+    titulo: new FormControl(null),
+    categoria: new FormControl(null),
+    descricao: new FormControl(null),
+    valor: new FormControl(null),
   })
 
   constructor(private produto: Produto ) {
@@ -50,6 +51,8 @@ export class IncluirPublicacaoComponent implements OnInit {
       email: this.email,
         titulo: this.formulario.value.titulo,
         categoria: this.formulario.value.categoria,
+        descricao:this.formulario.value.descricao,
+        telefone: this.produto.acessarTelefone(this.email),
         valor: this.formulario.value.valor,
         imagem: this.imagem[0],
         imagem2: this.imagem2[0],

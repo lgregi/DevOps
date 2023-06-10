@@ -17,28 +17,9 @@ constructor(private favoritos:Favoritos){
     'nome': new FormControl(null),
     'senha': new FormControl(null)
   })
-  Salvar(){
-    let teste={
-      'nome':this.formulario.value.nome,
-      'senha':this.formulario.value.senha,
-      'imagem':this.imagem[0]
-    }
-    this.favoritos.Salvar(teste)
-    
-
-    
-  }
-  public teste(){
-    let email='teste@fecap.com'
-    this.favoritos.recuperarG(email)
-    .then((teste:any)=>{
-      console.log(teste)
-      this.quadras=teste
-    })
-  }
-  public preparaImagemUpload(event: Event) {
-    this.imagem = ((<HTMLInputElement>event.target).files) // retorna um array
-  }
+  
+  
+ 
 
 
 }

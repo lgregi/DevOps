@@ -20,33 +20,21 @@ export class FavoritosComponent implements OnInit {
     firebase.auth().onAuthStateChanged((user: any) => {
       this.email = user.email
       this.atualizarProdutos()
-
     })
 
   }
   //traz todo os produtos
-  public atualizarProdutos(): void {
-    let contador :number = 0
+  public atualizarProdutos(): void {    
     this.favoritos.consultarFavoritados(this.email)
       .then((produtos) => {
         this.produto = produtos
         console.log(this.produto)
-        this.produto.forEach((dados:any)=>{
-        
-          contador ++
-          
-        })
-        console.log(contador)
-        
-
+        this.produto.forEach((dados:any)=>{  
+        })           
       })
-
-
-
-
   }
-  public Desfavoritar(key:any){
-    this.favoritos.Desfavoritar(this.email,key.key )
+  public Desfavoritar(Favoritado:any){
+    this.favoritos.Desfavoritar(this.email,Favoritado.key )
     .then(() =>{})
   }
 

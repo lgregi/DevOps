@@ -83,15 +83,11 @@ export class ProdutosComponent implements OnInit {
     let tets = ''
    await this.aut.acessarDadosUsuario(this.email)
     .then((teste:Usuario) => {
-      console.log('funciona', teste)
-      
+      console.log('funciona', teste)      
       this.aut.AlterarUsuario(this.email,teste.nome_usuario)
-    })
-    
+    })    
     .catch((err) => {console.log(err)})
-    console.log(tets)
-    
-    
+    console.log(tets)  
   }
 
 }

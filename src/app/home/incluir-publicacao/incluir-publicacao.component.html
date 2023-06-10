@@ -39,8 +39,7 @@
           class="form-control"
           accept="image/*"
           (change)="preparaImagemUpload4($event)"
-          >
-          
+          >       
           
           <input
           type="text"
@@ -59,8 +58,10 @@
           placeholder="Valor"
           class="form-control"
           formControlName="valor"
-          >
+          >          
+          <textarea type="text" name="descricao" id="descricao" class="font-2-s" rows="5" formControlName="descricao"></textarea>
         </div>
+       
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
           <button type="submit" class="btn btn-primary">Cadastrar</button>

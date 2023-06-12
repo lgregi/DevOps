@@ -28,8 +28,7 @@ export class ProdutosComponent implements OnInit {
     firebase.auth().onAuthStateChanged((user: any) => {
       this.email = user.email
       this.atualizarProdutos()
-      this.produtos.acessarDadosUsuarioDetalhe(this.email)
-      
+      this.produtos.acessarDadosUsuarioDetalhe(this.email)      
       
     })
 
@@ -42,7 +41,8 @@ export class ProdutosComponent implements OnInit {
         this.produto = produtos       
         console.log(this.produto)        
         this.paginas ++      
-      })  
+      }) 
+     
 
     
          

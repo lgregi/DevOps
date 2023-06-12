@@ -11,28 +11,35 @@ export class Ofertas {
 
     }
 
-
-    public recuperarOferta(key: string) {
-        this.key = key
-    }
-    public async RetornarKey() {
-        console.log('teste', this.key)
-        return await this.key
-
-    }
-
     public RetornaOferta(key: any): Promise<any> {
         let get: Array<any> = []
         let set: any
         return new Promise((resolve, reject) => {
             firebase.database().ref(`produtos/${key.key}`).once('value')
-                .then((ofeta) => {                    
-                    set =ofeta.val()
+                .then((ofeta) => {
+                    set = ofeta.val()
                     get.push(set)
-                    resolve(get)                    
+                    resolve(get)
                 })
                 .catch((err: any) => {
                     console.log(err)
+                })
+        })
+    }
+
+    public RetornaOfertaFavoritada(email: any, key: any): Promise<any> {
+        let get: Array<any> = []
+        let set: any
+        return new Promise((resolve, reject) => {
+            firebase.database().ref(`favoritos/${btoa(email)}/${key.key}`).once('value')
+                .then((ofeta) => {
+                    set = ofeta.val()
+                    get.push(set)
+                    resolve(get)
+                })
+                .catch((err: any) => {
+                    console.log(err)
+                    reject(err)
                 })
         })
     }

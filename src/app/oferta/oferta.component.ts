@@ -18,9 +18,7 @@ export class OfertaComponent implements OnInit {
 
     
  this.GetOferta()
- this.ofertas.recuperarOferta
- this.key=this.ofertas.RetornarKey()
- console.log(this.key)
+ 
   
       
   }

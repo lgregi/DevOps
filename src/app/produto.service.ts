@@ -366,7 +366,7 @@ export class Produto {
           console.log(dados.val())
           let imagens = dados.val().url
           console.log(dados.val())
-          for (let i = 0; i < imagens.length + 1; i++) {
+          for (let i = 0; i < imagens.length; i++) {
             if (i === 0) {
               firebase.storage().ref().child(`${produto.key}/${produto.key}`)
                 .delete()

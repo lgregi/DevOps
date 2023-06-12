@@ -1,5 +1,7 @@
 <app-topo></app-topo>
-<div></div>
+<div> <button type="button" class="btn btn-primary flex-grow-0" (click)="ApagarConta()" 
+  style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; height: 28px;">ApagarConta</button>
+</div>
 
   <div class="row" *ngFor="let publicacao of produto">
     <div class="col d-flex justify-content-center">
@@ -34,9 +36,10 @@
           <hr />
           <button type="button" class="btn btn-primary flex-grow-0" (click)="recuperarproduto(publicacao)" 
             style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; height: 28px;">Favoritar</button>
-            <button type="button" class="btn btn-primary flex-grow-0" (click)="Deletar(publicacao)" 
+            <button type="button" class="btn btn-primary flex-grow-0" (click)="DeletarProduto(publicacao)" 
             style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; height: 28px;">Deletar</button>
+           
         </div>
       </div>
     </div>
-  
+   

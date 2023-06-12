@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
 import { Produto } from 'src/app/produto.service';
 import { Favoritos } from '../favoritos.service';
+import { Autenticacao } from '../autenticacao.service';
 
 @Component({
   selector: 'app-meus-produtos',
@@ -13,7 +14,7 @@ export class MeusProdutosComponent implements OnInit {
   public produto: any
   public produto2: any
   public nome: any
-  constructor(private produtos: Produto, private favoritos:Favoritos) {
+  constructor(private produtos: Produto, private favoritos:Favoritos, private autenticacao:Autenticacao) {
 
   }
 
@@ -40,12 +41,33 @@ export class MeusProdutosComponent implements OnInit {
     this.favoritos.Favoritar(this.email,produtos)
     console.log(produtos)
   }
-  Deletar(produto:any){
+  DeletarProduto(produto:any){
     console.log(produto)
     this.produtos.DeletarProduto(produto)
     .then(()=>{
       
     })
   }
+  async ApagarConta() {
+    try {
+      await this.autenticacao.DeletarUsuarioBD(this.email);
+      await this.ApagarTudo(this.email);
+      await this.autenticacao.desativarConta();      
+      await Promise.all([
+        this.autenticacao.sair(),
+      ]);
+    } catch (error) {
+      
+    }
+  }
+  
+
+    public ApagarTudo(email:any){
+      this.autenticacao.DeletarProdutosCadastrados(email)
+      .then(() => {
+        
+      })
+
+    }
 }
 
